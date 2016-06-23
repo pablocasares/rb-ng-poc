@@ -1,0 +1,7 @@
+net/redborder/kafka/redborderProcessor$Reputation.class
+net/redborder/kafka/redborderProcessor$Flow.class
+net/redborder/kafka/utils/JsonPOJOSerializer.class
+net/redborder/kafka/redborderProcessor.class
+net/redborder/kafka/utils/JsonPOJODeserializer.class
+net/redborder/kafka/redborderProcessor$Location.class
+net/redborder/kafka/redborderProcessor$Enrichment.class
