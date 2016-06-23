@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Properties;
 
 
-public class redborderProcessor {
+public class RedborderProcessor {
 
     // POJO classes
     static public class Flow {
