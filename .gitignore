@@ -1,5 +1,5 @@
 *iml
-/.idea
-/target
+.idea
+target
 pom.xml.releaseBackup
 release.properties
