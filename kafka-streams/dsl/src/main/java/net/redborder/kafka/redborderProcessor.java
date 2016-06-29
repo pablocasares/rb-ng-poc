@@ -18,12 +18,10 @@ import java.util.Properties;
 public class RedborderProcessor {
 
 
-    public static void process() throws Exception {
+    private static KafkaStreams streams;
 
-        Properties streamsConfiguration = new Properties();
-        streamsConfiguration.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-pageview-typed");
-        streamsConfiguration.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        streamsConfiguration.put(StreamsConfig.ZOOKEEPER_CONNECT_CONFIG, "localhost:2181");
+    public static void process(Properties streamsConfiguration) throws Exception {
+
 
 
         //Define the topology builder
@@ -60,7 +58,6 @@ public class RedborderProcessor {
         * the same partitions than "reputations3" topic in order to be able to do the last leftJoin. Finally the last leftJoin joins the
         * data from re-partitioning-topic with "reputation" data.*/
 
-        System.out.println("Before...");
         KStream<String, Map<String, Object>> enrichmentKStream = flows.leftJoin(locations, (flow, location) -> new FlowLocationJoiner().apply(flow, location))
                 .map((dummy, record) -> new KeyValue<>((String) record.get("ip"), record))
                 .through(Serdes.String(), enrichmentSerde, Constants.REPARTITION_TOPIC)
@@ -72,12 +69,16 @@ public class RedborderProcessor {
         enrichmentKStream.to(Serdes.String(), enrichmentSerde, Constants.OUTPUT_TOPIC);
 
         /* This line builds the KafkaStreams process*/
-        KafkaStreams streams = new KafkaStreams(builder, streamsConfiguration);
+        streams = new KafkaStreams(builder, streamsConfiguration);
         /* This line starts the processing topology*/
         streams.start();
 
-
         // Wait briefly for the topology to be fully up and running (otherwise it might miss some or all
         // of the input data we produce below).
+        Thread.sleep(5000L);
+    }
+
+    public static void closeStreams(){
+        streams.close();
     }
 }
