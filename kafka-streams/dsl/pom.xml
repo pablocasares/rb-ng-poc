@@ -27,7 +27,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>net.redborder.kafka.Main∫ e</mainClass>
+                            <mainClass>net.redborder.kafka.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
